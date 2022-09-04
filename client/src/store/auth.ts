@@ -3,6 +3,7 @@ import { LoginResponse } from '../services/api';
 
 export interface AuthState {
   loggedIn: boolean;
+  id: number;
   username: string;
   email: string;
   token: string;
@@ -10,6 +11,7 @@ export interface AuthState {
 
 const initialState: AuthState = {
   loggedIn: false,
+  id: 0,
   username: '',
   email: '',
   token: '',
@@ -21,12 +23,14 @@ export const authSlice = createSlice({
   reducers: {
     login: (state, action: PayloadAction<LoginResponse>) => {
       state.loggedIn = true;
+      state.id = action.payload.id;
       state.username = action.payload.username;
       state.email = action.payload.email;
       state.token = action.payload.token;
     },
     logout: state => {
       state.loggedIn = false;
+      state.id = 0;
       state.username = '';
       state.email = '';
       state.token = '';
@@ -34,6 +38,5 @@ export const authSlice = createSlice({
   }
 })
 
-// Action creators are generated for each case reducer function
 export const { logout, login } = authSlice.actions;
 export const authReducer = authSlice.reducer;

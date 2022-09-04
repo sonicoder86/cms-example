@@ -12,7 +12,7 @@ export class LoginController {
 
   @Post()
   @HttpCode(200)
-  handleLogin(@Body() body: LoginRequest): LoginResponse {
+  public async handleLogin(@Body() body: LoginRequest): Promise<LoginResponse> {
     return this.loginService.login(body.username, body.password);
   }
 }

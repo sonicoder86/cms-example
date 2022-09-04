@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  mariadb:
+    container_name: cms_example_db
+    image: mariadb:10.9
+    ports:
+      - '3306:3306'
+    environment:
+      MARIADB_USER: db_user
+      MARIADB_PASSWORD: db_secret
+      MARIADB_DATABASE: cms
+      MARIADB_ROOT_PASSWORD: db_root_secret
