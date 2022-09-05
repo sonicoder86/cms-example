@@ -6,6 +6,7 @@ export interface AuthState {
   id: number;
   username: string;
   email: string;
+  roles: string[],
   token: string;
 }
 
@@ -14,6 +15,7 @@ const initialState: AuthState = {
   id: 0,
   username: '',
   email: '',
+  roles: [],
   token: '',
 };
 
@@ -26,6 +28,7 @@ export const authSlice = createSlice({
       state.id = action.payload.id;
       state.username = action.payload.username;
       state.email = action.payload.email;
+      state.roles = action.payload.roles;
       state.token = action.payload.token;
     },
     logout: state => {
@@ -33,6 +36,7 @@ export const authSlice = createSlice({
       state.id = 0;
       state.username = '';
       state.email = '';
+      state.roles = [];
       state.token = '';
     },
   }

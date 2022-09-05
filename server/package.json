@@ -22,7 +22,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "typeorm:schema:sync": "typeorm-ts-node-commonjs schema:sync -d ./src/db/db.data-source.ts",
     "typeorm:migration:run": "typeorm-ts-node-commonjs migration:run -d ./src/db/db.data-source.ts",
-    "typeorm:migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/db/db.data-source.ts src/db/migrations/user-migration"
+    "typeorm:migration:generate": "typeorm-ts-node-commonjs migration:generate -d ./src/db/db.data-source.ts src/db/migrations/role-migration"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
