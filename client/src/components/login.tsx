@@ -11,7 +11,7 @@ export function Login() {
   const userNameId = useId();
   const passwordId = useId();
   const [username, setUsername] = useState('admin');
-  const [password, setPassword] = useState('secret');
+  const [password, setPassword] = useState('adminsecret');
 
   const handleLogin = async () => {
     try {
