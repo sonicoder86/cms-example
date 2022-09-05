@@ -4,6 +4,7 @@ import { Menu } from './components/menu.component';
 import { LoginController } from './controllers/login.controller';
 import { HomeController } from './controllers/home.controller';
 import { ContentController } from './controllers/content.controller';
+import { AuthGuardComponent } from './components/auth-guard.component';
 
 export function App() {
   return (
@@ -15,8 +16,22 @@ export function App() {
       <main className="flex-shrink-0">
         <Routes>
           <Route path="/" element={<LoginController />} />
-          <Route path="/home" element={<HomeController />} />
-          <Route path="/content" element={<ContentController />} />
+          <Route
+            path="/home"
+            element={
+              <AuthGuardComponent>
+                <HomeController />
+              </AuthGuardComponent>
+            }
+          />
+          <Route
+            path="/content"
+            element={
+              <AuthGuardComponent>
+                <ContentController />
+              </AuthGuardComponent>
+            }
+          />
         </Routes>
       </main>
     </div>
