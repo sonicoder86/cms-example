@@ -47,6 +47,14 @@ export function Menu() {
               </li>
             )}
           </ul>
+
+          {auth.loggedIn && (
+            <form className="d-flex">
+              <button className="btn btn-outline-success" type="submit">
+                {`${auth.username} (${auth.email} as ${auth.roles.join(',')})`}
+              </button>
+            </form>
+          )}
         </div>
       </div>
     </nav>
