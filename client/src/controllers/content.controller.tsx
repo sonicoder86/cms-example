@@ -4,11 +4,10 @@ import { useContentThunk } from '../store/thunks/content.thunk';
 import { useDispatch } from 'react-redux';
 import { ContentComponent } from '../components/content.component';
 
-
 export function ContentController() {
   const content = useAppSelector((state) => state.content);
   const dispatch = useDispatch();
-  const contentThunk = useContentThunk()
+  const contentThunk = useContentThunk();
 
   useEffect(() => {
     dispatch(contentThunk);

@@ -12,7 +12,7 @@ export const useLogoutThunk = () => {
   const ThunkFunction: ThunkAction<void, RootState, unknown, AnyAction> = async (dispatch: AppDispatch, getState) => {
     const state = getState();
     await authApi.logout(state.auth.token);
-    dispatch(logout())
+    dispatch(logout());
     navigate('/');
   };
   return ThunkFunction;

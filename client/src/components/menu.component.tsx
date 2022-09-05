@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { useAppSelector } from '../store/hooks';
 import { useLogoutThunk } from '../store/thunks/logout.thunk';
 import { useDispatch } from 'react-redux';
