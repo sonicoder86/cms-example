@@ -1,9 +1,9 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { Menu } from './components/menu.component';
-import { Login } from './components/login.component';
-import { Home } from './components/home.component';
-import { Content } from './components/content.component';
+import { LoginController } from './controllers/login.controller';
+import { HomeController } from './controllers/home.controller';
+import { ContentController } from './controllers/content.controller';
 
 export function App() {
   return (
@@ -14,9 +14,9 @@ export function App() {
 
       <main className="flex-shrink-0">
         <Routes>
-          <Route path="/" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/content" element={<Content />} />
+          <Route path="/" element={<LoginController />} />
+          <Route path="/home" element={<HomeController />} />
+          <Route path="/content" element={<ContentController />} />
         </Routes>
       </main>
     </div>

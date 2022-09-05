@@ -1,6 +1,6 @@
 import { useAppSelector } from '../store/hooks';
 
-export function Home() {
+export function HomeController() {
   const auth = useAppSelector((state) => state.auth);
 
   return (

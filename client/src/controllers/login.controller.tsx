@@ -6,7 +6,7 @@ import { config } from '../config';
 import { useDispatch } from 'react-redux';
 import { useLoginThunk } from '../store/thunks/login.thunk';
 
-export function Login() {
+export function LoginController() {
   const auth = useAppSelector((state) => state.auth);
   const dispatch = useDispatch();
   const userNameId = useId();

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useAppSelector } from '../store/hooks';
 import { useLogoutThunk } from '../store/thunks/logout.thunk';
 import { useDispatch } from 'react-redux';
+import { MenuItemComponent } from './menu-item.component';
 
 export function Menu() {
   const dispatch = useDispatch();
@@ -22,21 +23,9 @@ export function Menu() {
         <a className="navbar-brand" href="#">CMS Example</a>
         <div className="collapse navbar-collapse" id="navbarCollapse">
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
-            {(isAdmin || isSignedIn) && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/home">Home</Link>
-              </li>
-            )}
-            {(isAdmin || isEditor) && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/content">Content</Link>
-              </li>
-            )}
-            {!auth.loggedIn && (
-              <li className="nav-item">
-                <Link className="nav-link" to="/">Login</Link>
-              </li>
-            )}
+            {(isAdmin || isSignedIn) && (<MenuItemComponent name={'Home'} link={'/home'} />)}
+            {(isAdmin || isEditor) && (<MenuItemComponent name={'Content'} link={'/content'} />)}
+            {!auth.loggedIn && (<MenuItemComponent name={'Login'} link={'/'} />)}
             {auth.loggedIn && (
               <li className="nav-item">
                 <a onClick={handleLogout} className="nav-link" href="#">Logout</a>
