@@ -1,13 +1,13 @@
 import { useId, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { Api } from '../services/api';
+import { AuthApi } from '../services/auth-api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { failedLogin, login, resetFailedLogins } from '../store/auth';
 import { config } from '../config';
 
 export function Login() {
-  const api = new Api();
+  const authApi = new AuthApi();
   const auth = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -19,7 +19,7 @@ export function Login() {
 
   const handleLogin = async () => {
     try {
-      const response = await api.login(username, password);
+      const response = await authApi.login(username, password);
       dispatch(login(response))
       navigate('/home');
     } catch (e) {

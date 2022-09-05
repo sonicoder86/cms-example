@@ -32,6 +32,12 @@ export class AuthService {
   }
 
   public async logout(token: string): Promise<void> {
+    await this.authenticate(token)
+
+    await this.dataSource.getRepository(Session).delete({ token });
+  }
+
+  public async authenticate(token: string): Promise<void> {
     const session = await this.dataSource.getRepository(Session).findOne({
       where: { token },
     });
@@ -39,8 +45,6 @@ export class AuthService {
     if (!session) {
       throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
     }
-
-    await this.dataSource.getRepository(Session).delete({ token });
   }
 
   private async findUser(username: string, password: string): Promise<User> {
