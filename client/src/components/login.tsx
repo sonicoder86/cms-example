@@ -1,17 +1,21 @@
 import { useId, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Api } from '../services/api';
-import { useAppDispatch } from '../store/hooks';
-import { login } from '../store/auth';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { failedLogin, login, resetFailedLogins } from '../store/auth';
+import { config } from '../config';
 
 export function Login() {
   const api = new Api();
+  const auth = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const userNameId = useId();
   const passwordId = useId();
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('adminsecret');
+  const loginDisabled = auth.failedLogins >= config.loginAttempts;
 
   const handleLogin = async () => {
     try {
@@ -19,9 +23,14 @@ export function Login() {
       dispatch(login(response))
       navigate('/home');
     } catch (e) {
+      dispatch(failedLogin())
       window.alert('Failed to login');
     }
-  }
+  };
+
+  const handleCaptchaSuccess = (e) => {
+    dispatch(resetFailedLogins());
+  };
 
   return (
     <div className="container">
@@ -71,9 +80,20 @@ export function Login() {
 
             </div>
 
+            {loginDisabled &&
+              <div className="row g-3">
+                <div className="col-12">
+                  <ReCAPTCHA
+                    sitekey={config.captchaKey}
+                    onChange={handleCaptchaSuccess}
+                  />
+                </div>
+              </div>
+            }
+
             <hr/>
 
-            <button onClick={handleLogin} className="w-50 btn btn-primary btn-lg" type="button">Login</button>
+            <button onClick={handleLogin} disabled={loginDisabled} className="w-50 btn btn-primary btn-lg" type="button">Login</button>
           </form>
         </div>
       </div>
