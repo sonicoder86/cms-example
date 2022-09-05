@@ -2,17 +2,20 @@ import { MouseEventHandler } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { logout } from '../store/auth';
+import { Api } from '../services/api';
 
 export function Menu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const api = new Api();
   const auth = useAppSelector((state) => state.auth);
   const isAdmin = auth.loggedIn && auth.roles.includes('administrator');
   const isEditor = auth.loggedIn && auth.roles.includes('content_editor');
   const isSignedIn = auth.loggedIn && auth.roles.includes('signed_in');
 
-  const handleLogout: MouseEventHandler<HTMLAnchorElement> = (e) => {
+  const handleLogout: MouseEventHandler<HTMLAnchorElement> = async (e) => {
     e.preventDefault();
+    await api.logout(auth.token);
     dispatch(logout())
     navigate('/');
   };
