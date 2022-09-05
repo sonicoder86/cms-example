@@ -1,19 +1,15 @@
 import { useEffect } from 'react';
-import { ContentApiService } from '../services/content-api.service';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setContents } from '../store/reducers/content.reducer';
+import { useAppSelector } from '../store/hooks';
+import { useContentThunk } from '../store/thunks/content.thunk';
+import { useDispatch } from 'react-redux';
 
 export function Content() {
-  const contentApi = new ContentApiService();
-  const auth = useAppSelector((state) => state.auth);
   const content = useAppSelector((state) => state.content);
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
+  const contentThunk = useContentThunk()
 
   useEffect(() => {
-    contentApi.getContents(auth.token)
-      .then((contents) => {
-        dispatch(setContents(contents));
-      });
+    dispatch(contentThunk);
   }, []);
 
   return (

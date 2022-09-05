@@ -1,23 +1,19 @@
-import { MouseEventHandler } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logout } from '../store/reducers/auth.reducer';
-import { AuthApiService } from '../services/auth-api.service';
+import { Link } from 'react-router-dom';
+import { useAppSelector } from '../store/hooks';
+import { useLogoutThunk } from '../store/thunks/logout.thunk';
+import { useDispatch } from 'react-redux';
 
 export function Menu() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const authApi = new AuthApiService();
+  const dispatch = useDispatch();
   const auth = useAppSelector((state) => state.auth);
   const isAdmin = auth.loggedIn && auth.roles.includes('administrator');
   const isEditor = auth.loggedIn && auth.roles.includes('content_editor');
   const isSignedIn = auth.loggedIn && auth.roles.includes('signed_in');
+  const logoutThunk = useLogoutThunk();
 
-  const handleLogout: MouseEventHandler<HTMLAnchorElement> = async (e) => {
+  const handleLogout = (e) => {
     e.preventDefault();
-    await authApi.logout(auth.token);
-    dispatch(logout())
-    navigate('/');
+    dispatch(logoutThunk);
   };
 
   return (

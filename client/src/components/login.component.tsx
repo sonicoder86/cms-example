@@ -1,31 +1,23 @@
 import { useId, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { AuthApiService } from '../services/auth-api.service';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { failedLogin, login, resetFailedLogins } from '../store/reducers/auth.reducer';
+import { useAppSelector } from '../store/hooks';
+import { resetFailedLogins } from '../store/reducers/auth.reducer';
 import { config } from '../config';
+import { useDispatch } from 'react-redux';
+import { useLoginThunk } from '../store/thunks/login.thunk';
 
 export function Login() {
-  const authApi = new AuthApiService();
   const auth = useAppSelector((state) => state.auth);
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const userNameId = useId();
   const passwordId = useId();
   const [username, setUsername] = useState('admin');
   const [password, setPassword] = useState('adminsecret');
   const loginDisabled = auth.failedLogins >= config.loginAttempts;
+  const loginThunk = useLoginThunk(username, password);
 
   const handleLogin = async () => {
-    try {
-      const response = await authApi.login(username, password);
-      dispatch(login(response))
-      navigate('/home');
-    } catch (e) {
-      dispatch(failedLogin())
-      window.alert('Failed to login');
-    }
+    dispatch(loginThunk);
   };
 
   const handleCaptchaSuccess = (e) => {
