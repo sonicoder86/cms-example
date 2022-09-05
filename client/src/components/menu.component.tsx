@@ -1,13 +1,13 @@
 import { MouseEventHandler } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logout } from '../store/auth';
-import { AuthApi } from '../services/auth-api';
+import { logout } from '../store/reducers/auth.reducer';
+import { AuthApiService } from '../services/auth-api.service';
 
 export function Menu() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const authApi = new AuthApi();
+  const authApi = new AuthApiService();
   const auth = useAppSelector((state) => state.auth);
   const isAdmin = auth.loggedIn && auth.roles.includes('administrator');
   const isEditor = auth.loggedIn && auth.roles.includes('content_editor');

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
-import { ContentApi } from '../services/content-api';
+import { ContentApiService } from '../services/content-api.service';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setContents } from '../store/content';
+import { setContents } from '../store/reducers/content.reducer';
 
 export function Content() {
-  const contentApi = new ContentApi();
+  const contentApi = new ContentApiService();
   const auth = useAppSelector((state) => state.auth);
   const content = useAppSelector((state) => state.content);
   const dispatch = useAppDispatch();

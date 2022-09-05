@@ -1,9 +1,9 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { Menu } from './components/menu';
-import { Login } from './components/login';
-import { Home } from './components/home';
-import { Content } from './components/content';
+import { Menu } from './components/menu.component';
+import { Login } from './components/login.component';
+import { Home } from './components/home.component';
+import { Content } from './components/content.component';
 
 export function App() {
   return (

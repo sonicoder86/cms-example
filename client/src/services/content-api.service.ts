@@ -7,7 +7,7 @@ export interface Content {
   description: string;
 }
 
-export class ContentApi {
+export class ContentApiService {
   public async getContents(token: string): Promise<Content[]> {
     const response = await axios.get<Content[]>(
       `${config.serviceUrl}/contents`,

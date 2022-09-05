@@ -1,13 +1,13 @@
 import { useId, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { AuthApi } from '../services/auth-api';
+import { AuthApiService } from '../services/auth-api.service';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { failedLogin, login, resetFailedLogins } from '../store/auth';
+import { failedLogin, login, resetFailedLogins } from '../store/reducers/auth.reducer';
 import { config } from '../config';
 
 export function Login() {
-  const authApi = new AuthApi();
+  const authApi = new AuthApiService();
   const auth = useAppSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();

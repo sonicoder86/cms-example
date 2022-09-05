@@ -3,8 +3,8 @@ import { sign } from 'jsonwebtoken';
 import { DataSource } from 'typeorm';
 import { createHash } from 'crypto';
 import { config } from '../config';
-import { User } from '../db/entities/user.entity';
-import { Session } from '../db/entities/session.entity';
+import { UserEntity } from '../db/entities/user.entity';
+import { SessionEntity } from '../db/entities/session.entity';
 
 export interface LoginResponse {
   id: number;
@@ -34,11 +34,11 @@ export class AuthService {
   public async logout(token: string): Promise<void> {
     await this.authenticate(token)
 
-    await this.dataSource.getRepository(Session).delete({ token });
+    await this.dataSource.getRepository(SessionEntity).delete({ token });
   }
 
   public async authenticate(token: string): Promise<void> {
-    const session = await this.dataSource.getRepository(Session).findOne({
+    const session = await this.dataSource.getRepository(SessionEntity).findOne({
       where: { token },
     });
 
@@ -47,8 +47,8 @@ export class AuthService {
     }
   }
 
-  private async findUser(username: string, password: string): Promise<User> {
-    const user = await this.dataSource.getRepository(User).findOne({
+  private async findUser(username: string, password: string): Promise<UserEntity> {
+    const user = await this.dataSource.getRepository(UserEntity).findOne({
       where: {
         username,
         password: this.sha1Encode(password),
@@ -72,13 +72,13 @@ export class AuthService {
     return shaSum.digest('hex');
   }
 
-  private async createSession(user: User): Promise<string> {
+  private async createSession(user: UserEntity): Promise<string> {
     const token = sign({ id: user.id }, config.clientSecret);
-    const session = new Session();
+    const session = new SessionEntity();
     session.token = token;
     session.user_id = user.id;
     session.created = new Date();
-    await this.dataSource.getRepository(Session).insert(session);
+    await this.dataSource.getRepository(SessionEntity).insert(session);
 
     return token;
   }

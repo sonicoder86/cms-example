@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Content } from '../services/content-api';
+import { Content } from '../../services/content-api.service';
 
 export interface ContentState {
   contents: Content[];
