@@ -7,5 +7,5 @@ export const config = {
     username: process.env.DB_USERNAME || 'db_user',
     password: process.env.DB_PASSWORD || 'db_secret',
     database: process.env.DB_DATABASE || 'cms',
-  }
+  },
 };

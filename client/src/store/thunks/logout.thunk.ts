@@ -9,7 +9,12 @@ export const useLogoutThunk = () => {
   const authApi = new AuthApiService();
   const navigate = useNavigate();
 
-  const ThunkFunction: ThunkAction<void, RootState, unknown, AnyAction> = async (dispatch: AppDispatch, getState) => {
+  const ThunkFunction: ThunkAction<
+    void,
+    RootState,
+    unknown,
+    AnyAction
+  > = async (dispatch: AppDispatch, getState) => {
     const state = getState();
     await authApi.logout(state.auth.token);
     dispatch(logout());

@@ -23,5 +23,5 @@ export class UserEntity {
 
   @ManyToMany(() => RoleEntity)
   @JoinTable()
-  roles: RoleEntity[]
+  roles: RoleEntity[];
 }

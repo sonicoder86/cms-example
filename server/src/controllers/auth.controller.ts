@@ -18,7 +18,9 @@ export class AuthController {
 
   @Post('logout')
   @HttpCode(200)
-  public async handleLogout(@Headers('Authorization') authHeader: string): Promise<void> {
+  public async handleLogout(
+    @Headers('Authorization') authHeader: string,
+  ): Promise<void> {
     const token = (authHeader || '').replace('Bearer ', '');
     return this.authService.logout(token);
   }

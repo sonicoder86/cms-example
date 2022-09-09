@@ -15,9 +15,15 @@ export interface LoginResponse {
 }
 
 export class AuthApiService {
-  public async login(username: string, password: string): Promise<LoginResponse> {
+  public async login(
+    username: string,
+    password: string,
+  ): Promise<LoginResponse> {
     const payload: LoginRequest = { username, password };
-    const response = await axios.post<LoginResponse>(`${config.serviceUrl}/auth/login`, payload);
+    const response = await axios.post<LoginResponse>(
+      `${config.serviceUrl}/auth/login`,
+      payload,
+    );
     return response.data;
   }
 
@@ -27,8 +33,9 @@ export class AuthApiService {
       {},
       {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
   }
 }

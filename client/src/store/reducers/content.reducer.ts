@@ -16,8 +16,8 @@ export const contentSlice = createSlice({
     setContents: (state, action: PayloadAction<Content[]>) => {
       state.contents = action.payload;
     },
-  }
-})
+  },
+});
 
 export const { setContents } = contentSlice.actions;
 export const contentReducer = contentSlice.reducer;

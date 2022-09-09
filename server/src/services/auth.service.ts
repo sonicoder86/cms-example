@@ -11,14 +11,17 @@ export interface LoginResponse {
   username: string;
   email: string;
   token: string;
-  roles: string[]
+  roles: string[];
 }
 
 @Injectable()
 export class AuthService {
   constructor(private dataSource: DataSource) {}
 
-  public async login(username: string, password: string): Promise<LoginResponse> {
+  public async login(
+    username: string,
+    password: string,
+  ): Promise<LoginResponse> {
     const user = await this.findUser(username, password);
     const token = await this.createSession(user);
 
@@ -26,13 +29,13 @@ export class AuthService {
       id: user.id,
       username: user.username,
       email: user.email,
-      roles: user.roles.map(role => role.name),
+      roles: user.roles.map((role) => role.name),
       token,
     };
   }
 
   public async logout(token: string): Promise<void> {
-    await this.authenticate(token)
+    await this.authenticate(token);
 
     await this.dataSource.getRepository(SessionEntity).delete({ token });
   }
@@ -47,7 +50,10 @@ export class AuthService {
     }
   }
 
-  private async findUser(username: string, password: string): Promise<UserEntity> {
+  private async findUser(
+    username: string,
+    password: string,
+  ): Promise<UserEntity> {
     const user = await this.dataSource.getRepository(UserEntity).findOne({
       where: {
         username,

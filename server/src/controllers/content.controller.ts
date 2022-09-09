@@ -1,4 +1,4 @@
-import { Controller, Get, Headers, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ContentService } from '../services/content.service';
 import { ContentEntity } from '../db/entities/content.entity';
 import { AuthGuard } from '../guards/auth.guard';
@@ -9,7 +9,7 @@ export class ContentController {
 
   @Get()
   @UseGuards(AuthGuard)
-  async getContents(@Headers('Authorization') authHeader: string): Promise<ContentEntity[]> {
+  async getContents(): Promise<ContentEntity[]> {
     return await this.contentService.getContents();
   }
 }

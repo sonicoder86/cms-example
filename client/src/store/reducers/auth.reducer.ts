@@ -6,7 +6,7 @@ export interface AuthState {
   id: number;
   username: string;
   email: string;
-  roles: string[],
+  roles: string[];
   token: string;
   failedLogins: number;
 }
@@ -39,7 +39,7 @@ export const authSlice = createSlice({
     resetFailedLogins: (state) => {
       state.failedLogins = 0;
     },
-    logout: state => {
+    logout: (state) => {
       state.loggedIn = false;
       state.id = 0;
       state.username = '';
@@ -47,8 +47,9 @@ export const authSlice = createSlice({
       state.roles = [];
       state.token = '';
     },
-  }
-})
+  },
+});
 
-export const { logout, login, failedLogin, resetFailedLogins } = authSlice.actions;
+export const { logout, login, failedLogin, resetFailedLogins } =
+  authSlice.actions;
 export const authReducer = authSlice.reducer;

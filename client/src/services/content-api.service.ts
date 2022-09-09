@@ -13,9 +13,10 @@ export class ContentApiService {
       `${config.serviceUrl}/contents`,
       {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
     return response.data;
   }
