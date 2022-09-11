@@ -2,13 +2,20 @@ import { useAppSelector } from '../store/hooks';
 import { useLogoutThunk } from '../store/thunks/logout.thunk';
 import { useDispatch } from 'react-redux';
 import { MenuItemComponent } from './menu-item.component';
+import {
+  isAdminSelector,
+  isEditorSelector,
+  isLoggedInSelector,
+  isSignedInSelector
+} from '../store/reducers/auth.reducer';
 
 export function Menu() {
   const dispatch = useDispatch();
   const auth = useAppSelector((state) => state.auth);
-  const isAdmin = auth.loggedIn && auth.roles.includes('administrator');
-  const isEditor = auth.loggedIn && auth.roles.includes('content_editor');
-  const isSignedIn = auth.loggedIn && auth.roles.includes('signed_in');
+  const isLoggedIn = useAppSelector(isLoggedInSelector);
+  const isAdmin = useAppSelector(isAdminSelector);
+  const isEditor = useAppSelector(isEditorSelector);
+  const isSignedIn = useAppSelector(isSignedInSelector);
   const logoutThunk = useLogoutThunk();
 
   const handleLogout = (e) => {
@@ -24,15 +31,15 @@ export function Menu() {
           <ul className="navbar-nav me-auto mb-2 mb-md-0">
             {(isAdmin || isSignedIn) && (<MenuItemComponent name={'Home'} link={'/home'} />)}
             {(isAdmin || isEditor) && (<MenuItemComponent name={'Content'} link={'/content'} />)}
-            {!auth.loggedIn && (<MenuItemComponent name={'Login'} link={'/'} />)}
-            {auth.loggedIn && (
+            {!isLoggedIn && (<MenuItemComponent name={'Login'} link={'/'} />)}
+            {isLoggedIn && (
               <li className="nav-item">
                 <a onClick={handleLogout} className="nav-link" href="#">Logout</a>
               </li>
             )}
           </ul>
 
-          {auth.loggedIn && (
+          {isLoggedIn && (
             <form className="d-flex">
               <button className="btn btn-outline-success" type="submit">
                 {`${auth.username} (${auth.email} as ${auth.roles.join(',')})`}

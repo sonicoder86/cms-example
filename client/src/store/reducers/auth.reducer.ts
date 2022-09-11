@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoginResponse } from '../../services/auth-api.service';
+import { RootState } from '../store';
 
 export interface AuthState {
   loggedIn: boolean;
@@ -49,6 +50,14 @@ export const authSlice = createSlice({
     },
   },
 });
+
+export const isLoggedInSelector = (state: RootState) => state.auth.loggedIn;
+export const isAdminSelector = (state: RootState) =>
+  isLoggedInSelector(state) && state.auth.roles.includes('administrator');
+export const isEditorSelector = (state: RootState) =>
+  isLoggedInSelector(state) && state.auth.roles.includes('content_editor');
+export const isSignedInSelector = (state: RootState) =>
+  isLoggedInSelector(state) && state.auth.roles.includes('signed_in');
 
 export const { logout, login, failedLogin, resetFailedLogins } =
   authSlice.actions;
